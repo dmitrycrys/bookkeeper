@@ -1,5 +1,5 @@
 //
-//  OwnerTableViewController.swift
+//  BooksTableViewController.swift
 //  BookKeeper
 //
 //  Created by Dmitry Babinsky on 7/17/17.
@@ -9,18 +9,18 @@
 import UIKit
 import CoreData
 
-class OwnerTableViewController: UITableViewController {
+class BooksTableViewController: UITableViewController {
 
+    var owner: Owner!
     fileprivate var context: NSManagedObjectContext {
         return dataManager.persistenceController.mainManagedObjectContext
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        fetchOwners()
+        fetchBooks()
     }
     
-    func fetchOwners() {
+    func fetchBooks() {
         do {
             try fetchedResultsController.performFetch()
         } catch let error {
@@ -28,10 +28,12 @@ class OwnerTableViewController: UITableViewController {
         }
     }
     
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Owner> = {
-        let fetchRequest = NSFetchRequest<Owner>(entityName: "Owner")
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Book> = {
+        let fetchRequest = NSFetchRequest<Book>(entityName: "Book")
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        let predicate = NSPredicate(format: "bookOwner == %@", self.owner)
         fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.predicate = predicate
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: self.context,
                                                                   sectionNameKeyPath: nil,
@@ -40,20 +42,29 @@ class OwnerTableViewController: UITableViewController {
         
         return fetchedResultsController
     }()
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueIds.addBook,
+            let vc = segue.destination as? AddBookViewController {
+            vc.owner = owner
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
-extension OwnerTableViewController {
+
+extension BooksTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let owners = fetchedResultsController.fetchedObjects else { return 0 }
-        return owners.count
+        guard let books = fetchedResultsController.fetchedObjects else { return 0 }
+        return books.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ownerCellId", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "bookCellId", for: indexPath)
         
-        let owner = fetchedResultsController.object(at: indexPath)
-        cell.textLabel?.text = owner.name
+        let book = fetchedResultsController.object(at: indexPath)
+        cell.textLabel?.text = book.title
+        cell.detailTextLabel?.text = book.author
         
         return cell
     }
@@ -61,13 +72,9 @@ extension OwnerTableViewController {
 
 // MARK: - UITableViewDelegate
 
-extension OwnerTableViewController {
+extension BooksTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let owner = fetchedResultsController.object(at: indexPath)
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: StoryboardKeys.booksVC)
-            as? BooksTableViewController else { fatalError() }
-        vc.owner = owner
-        navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -76,14 +83,22 @@ extension OwnerTableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
-            let owner = fetchedResultsController.object(at: indexPath)
-            dataManager.delete(owner: owner)
+            let book = fetchedResultsController.object(at: indexPath)
+            dataManager.delete(book: book)
             tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let book = fetchedResultsController.object(at: indexPath)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: StoryboardKeys.addBook)
+            as? AddBookViewController else { fatalError() }
+        vc.book = book
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
-extension OwnerTableViewController: NSFetchedResultsControllerDelegate {
+extension BooksTableViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any,
                     at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
