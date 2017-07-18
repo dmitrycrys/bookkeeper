@@ -24,11 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Cant fetch owner navigation controller")
             }
             
-            guard let vc = nav.viewControllers[0] as? OwnerTableViewController else {
-                fatalError("Cant fetch owners table controller")
-            }
-            
-            vc.persistenceController = self.persistenceController
+            dataManager.persistenceController = self.persistenceController
             self.window?.rootViewController = nav
         })
         

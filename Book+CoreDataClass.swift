@@ -1,5 +1,5 @@
 //
-//  Owner+CoreDataClass.swift
+//  Book+CoreDataClass.swift
 //  BookKeeper
 //
 //  Created by Dmitry Babinsky on 7/18/17.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(Owner)
-public class Owner: NSManagedObject {
+@objc(Book)
+public class Book: NSManagedObject {
 
 }

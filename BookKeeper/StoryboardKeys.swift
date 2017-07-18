@@ -10,4 +10,7 @@ import Foundation
 
 enum StoryboardKeys {
     static let ownerNav = "OwnerNavigationController"
+    static let addOwner = "AddOwnerViewController"
+    static let booksVC = "BooksTableViewController"
+    static let addBook = "AddBookViewController"
 }
