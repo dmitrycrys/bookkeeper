@@ -51,13 +51,17 @@ class DataManager: NSObject {
      - parameter author: book author
      - parameter image: book cover image
      */
-    func addBook(owner: Owner, title: String, author: String, image: UIImage) {
+    func addBook(owner: Owner, title: String, author: String,
+                 image: UIImage, pageCount: String, description: String, isRead: NSNumber) {
         guard let imageData = UIImagePNGRepresentation(image) else { fatalError() }
         let book = Book(entity: bookEntity, insertInto: context)
         book.title = title
         book.author = author
         book.image = imageData as NSData
         book.bookOwner = owner
+        book.isBookRead = isRead
+        book.pageCount = pageCount
+        book.bookDescription = description
         persistenceController.save()
     }
     

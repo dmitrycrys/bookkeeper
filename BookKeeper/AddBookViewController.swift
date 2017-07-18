@@ -15,7 +15,11 @@ class AddBookViewController: UIViewController {
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var isReadSwitch: UISwitch!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var pageCountTextField: UITextField!
     
+    @IBOutlet weak var descriptionTextViewHeightConstraint: NSLayoutConstraint!
     var persistenceController: PersistenceController!
     var owner: Owner!
     var book: Book!
@@ -30,23 +34,41 @@ class AddBookViewController: UIViewController {
         return authorNameTextField.text ?? ""
     }
     
+    var pageCount: String {
+        return pageCountTextField.text ?? ""
+    }
+    
+    var bookDescription: String {
+        return descriptionTextView.text ?? ""
+    }
+    
+    var isRead: NSNumber {
+        return NSNumber(value: isReadSwitch.isOn)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if book != nil {
-            setupDetailsUI()
-        }
+        if book != nil { setupDetailsUI() }
+        descriptionTextViewHeightConstraint.constant = 60
     }
     
     func setupDetailsUI() {
         bookTitleTextField.text = book.title
         authorNameTextField.text = book.author
+        descriptionTextView.text = book.bookDescription == "" ? "Description is empty" : book.bookDescription
+        pageCountTextField.text = book.pageCount
+        let isOn = book.isBookRead?.boolValue ?? false
         guard let imageData = book.image as Data? else { fatalError() }
+        isReadSwitch.isOn = isOn
         coverImageView.image = UIImage(data: imageData)
         coverImageView.isHidden = false
         addImageButton.isHidden = true
         bookTitleTextField.isEnabled = false
         authorNameTextField.isEnabled = false
+        descriptionTextView.isEditable = false
+        pageCountTextField.isEnabled = false
+        isReadSwitch.isEnabled = false
         saveBarButton.isEnabled = false
     }
     
@@ -60,7 +82,10 @@ class AddBookViewController: UIViewController {
     @IBAction func saveButtonAction(_ sender: UIBarButtonItem) {
         DispatchQueue.global(qos: .default).async {
             let image = self.coverImageView.image ?? #imageLiteral(resourceName: "1image")
-            dataManager.addBook(owner: self.owner, title: self.bookTitle, author: self.authorName, image: image)
+            dataManager.addBook(owner: self.owner, title: self.bookTitle,
+                                author: self.authorName, image: image,
+                                pageCount: self.pageCount, description: self.bookDescription,
+                                isRead: self.isRead)
         }
         navigationController?.popViewController(animated: true)
     }
