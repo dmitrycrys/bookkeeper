@@ -305,8 +305,8 @@
                         <outlet property="coverImageView" destination="PMC-QH-Kov" id="9MQ-CC-j2m"/>
                         <outlet property="descriptionTextView" destination="7ki-tl-VM0" id="8Zm-DA-4vv"/>
                         <outlet property="descriptionTextViewHeightConstraint" destination="Omi-re-6oe" id="tab-Sp-H66"/>
-                        <outlet property="isReadSwitch" destination="sBX-ao-z0h" id="EDf-t8-i4D"/>
                         <outlet property="pageCountTextField" destination="36p-sV-FW6" id="u6q-Mm-84h"/>
+                        <outlet property="readSwitch" destination="sBX-ao-z0h" id="5eu-Fm-btf"/>
                         <outlet property="saveBarButton" destination="fXG-Mu-VCe" id="Nme-Rw-Yjf"/>
                     </connections>
                 </viewController>

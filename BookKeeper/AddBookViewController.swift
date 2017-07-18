@@ -15,7 +15,7 @@ class AddBookViewController: UIViewController {
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     @IBOutlet weak var addImageButton: UIButton!
-    @IBOutlet weak var isReadSwitch: UISwitch!
+    @IBOutlet weak var readSwitch: UISwitch!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var pageCountTextField: UITextField!
     
@@ -42,8 +42,8 @@ class AddBookViewController: UIViewController {
         return descriptionTextView.text ?? ""
     }
     
-    var isRead: NSNumber {
-        return NSNumber(value: isReadSwitch.isOn)
+    var isRead: Bool {
+        return readSwitch.isOn
     }
     
     override func viewDidLoad() {
@@ -54,13 +54,17 @@ class AddBookViewController: UIViewController {
     }
     
     func setupDetailsUI() {
+        
+        guard let info = book.bookInfo else { fatalError() }
+        
         bookTitleTextField.text = book.title
         authorNameTextField.text = book.author
-        descriptionTextView.text = book.bookDescription == "" ? "Description is empty" : book.bookDescription
-        pageCountTextField.text = book.pageCount
-        let isOn = book.isBookRead?.boolValue ?? false
+        descriptionTextView.text = info.bookDescription == "" ?
+            "Description is empty" : info.bookDescription
+        pageCountTextField.text = info.pageCount
+        let isOn = info.isBookRead 
         guard let imageData = book.image as Data? else { fatalError() }
-        isReadSwitch.isOn = isOn
+        readSwitch.isOn = isOn
         coverImageView.image = UIImage(data: imageData)
         coverImageView.isHidden = false
         addImageButton.isHidden = true
@@ -68,7 +72,7 @@ class AddBookViewController: UIViewController {
         authorNameTextField.isEnabled = false
         descriptionTextView.isEditable = false
         pageCountTextField.isEnabled = false
-        isReadSwitch.isEnabled = false
+        readSwitch.isEnabled = false
         saveBarButton.isEnabled = false
     }
     

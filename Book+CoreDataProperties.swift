@@ -19,9 +19,7 @@ extension Book {
     @NSManaged public var author: String?
     @NSManaged public var image: NSData?
     @NSManaged public var title: String?
-    @NSManaged public var bookDescription: String?
-    @NSManaged public var pageCount: String?
-    @NSManaged public var isBookRead: NSNumber?
     @NSManaged public var bookOwner: Owner?
+    @NSManaged public var bookInfo: BookInfo?
 
 }
