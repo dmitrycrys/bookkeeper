@@ -6,8 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -205,69 +203,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Book title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oKd-Tz-ym8">
-                                <rect key="frame" x="16" y="50" width="343" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="AK5-3Y-a1E"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="textDidChange:" destination="SYd-YJ-sye" eventType="editingDidEnd" id="1pC-6z-syH"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Cover Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIq-g9-xtA">
-                                <rect key="frame" x="16" y="142" width="343" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="rIq-g9-xtA" secondAttribute="height" multiplier="49:3" id="Hec-3F-pOb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PMC-QH-Kov">
-                                <rect key="frame" x="67" y="179" width="240" height="284"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UsT-PO-aYq">
+                                <rect key="frame" x="16" y="28" width="343" height="257.5"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Book title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oKd-Tz-ym8">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textDidChange:" destination="SYd-YJ-sye" eventType="editingDidEnd" id="1pC-6z-syH"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pnh-o6-w5O">
+                                        <rect key="frame" x="0.0" y="40" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textDidChange:" destination="SYd-YJ-sye" eventType="editingChanged" id="p8q-dS-UNa"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isRead:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0CW-gu-WeP">
+                                        <rect key="frame" x="0.0" y="80" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sBX-ao-z0h">
+                                        <rect key="frame" x="0.0" y="110.5" width="345" height="31"/>
+                                    </switch>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Page Count" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="36p-sV-FW6">
+                                        <rect key="frame" x="0.0" y="151.5" width="343" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                    </textField>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Book description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7ki-tl-VM0">
+                                        <rect key="frame" x="0.0" y="191.5" width="343" height="66"/>
+                                        <color key="backgroundColor" red="0.83573510362694303" green="0.83573510362694303" blue="0.83573510362694303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="999" constant="66" id="Omi-re-6oe"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                            <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="244" translatesAutoresizingMaskIntoConstraints="NO" id="PMC-QH-Kov">
+                                <rect key="frame" x="67" y="342.5" width="240" height="240"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="RS4-gf-ifM"/>
+                                    <constraint firstAttribute="height" constant="240" id="iMy-b3-Kat"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87A-9g-Zmt">
-                                <rect key="frame" x="150" y="306" width="74" height="30"/>
+                                <rect key="frame" x="150" y="447.5" width="74" height="30"/>
                                 <state key="normal" title="Add Image"/>
                                 <connections>
                                     <action selector="addCoverImageButtonAction:" destination="SYd-YJ-sye" eventType="touchUpInside" id="SEm-71-goB"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pnh-o6-w5O">
-                                <rect key="frame" x="16" y="96" width="343" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Cover Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIq-g9-xtA">
+                                <rect key="frame" x="16" y="301.5" width="343" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="8Dd-Al-72p"/>
+                                    <constraint firstAttribute="height" constant="21" id="Gfb-4I-YzQ"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="textDidChange:" destination="SYd-YJ-sye" eventType="editingChanged" id="p8q-dS-UNa"/>
-                                </connections>
-                            </textField>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Pnh-o6-w5O" firstAttribute="trailing" secondItem="rIq-g9-xtA" secondAttribute="trailing" id="5zs-E4-zaa"/>
-                            <constraint firstItem="oKd-Tz-ym8" firstAttribute="trailing" secondItem="Pnh-o6-w5O" secondAttribute="trailing" id="6na-jm-DP5"/>
-                            <constraint firstItem="oKd-Tz-ym8" firstAttribute="leading" secondItem="Pnh-o6-w5O" secondAttribute="leading" id="7wg-D9-HhF"/>
-                            <constraint firstItem="rIq-g9-xtA" firstAttribute="top" secondItem="Pnh-o6-w5O" secondAttribute="bottom" constant="16" id="B6s-dX-12e"/>
-                            <constraint firstItem="PMC-QH-Kov" firstAttribute="centerY" secondItem="87A-9g-Zmt" secondAttribute="centerY" id="IJS-em-XRk"/>
-                            <constraint firstItem="Pnh-o6-w5O" firstAttribute="top" secondItem="oKd-Tz-ym8" secondAttribute="bottom" constant="16" id="KY0-XR-JgJ"/>
-                            <constraint firstItem="LXh-VW-PFN" firstAttribute="top" secondItem="PMC-QH-Kov" secondAttribute="bottom" constant="204" id="Now-9i-YVL"/>
-                            <constraint firstItem="PMC-QH-Kov" firstAttribute="leading" secondItem="zYa-eB-dYX" secondAttribute="leadingMargin" constant="51" id="TB0-9W-QSp"/>
-                            <constraint firstItem="PMC-QH-Kov" firstAttribute="top" secondItem="rIq-g9-xtA" secondAttribute="bottom" constant="16" id="Us8-ad-rHN"/>
-                            <constraint firstItem="PMC-QH-Kov" firstAttribute="centerX" secondItem="87A-9g-Zmt" secondAttribute="centerX" id="V58-My-87q"/>
-                            <constraint firstItem="oKd-Tz-ym8" firstAttribute="top" secondItem="9Xz-Av-f2m" secondAttribute="bottom" constant="30" id="ZaQ-h5-9Tr"/>
-                            <constraint firstItem="Pnh-o6-w5O" firstAttribute="leading" secondItem="rIq-g9-xtA" secondAttribute="leading" id="gld-M8-UQD"/>
-                            <constraint firstItem="rIq-g9-xtA" firstAttribute="centerX" secondItem="87A-9g-Zmt" secondAttribute="centerX" id="o6t-Zm-siu"/>
-                            <constraint firstItem="oKd-Tz-ym8" firstAttribute="trailing" secondItem="zYa-eB-dYX" secondAttribute="trailingMargin" id="r1k-xw-iEL"/>
-                            <constraint firstItem="oKd-Tz-ym8" firstAttribute="leading" secondItem="zYa-eB-dYX" secondAttribute="leadingMargin" id="vlw-SA-n8k"/>
+                            <constraint firstItem="rIq-g9-xtA" firstAttribute="top" secondItem="UsT-PO-aYq" secondAttribute="bottom" constant="16" id="4Zt-p8-Q7i"/>
+                            <constraint firstItem="PMC-QH-Kov" firstAttribute="centerX" secondItem="rIq-g9-xtA" secondAttribute="centerX" id="4a8-Ch-D7l"/>
+                            <constraint firstItem="rIq-g9-xtA" firstAttribute="trailing" secondItem="UsT-PO-aYq" secondAttribute="trailing" id="9Uh-Vd-okK"/>
+                            <constraint firstItem="PMC-QH-Kov" firstAttribute="top" secondItem="rIq-g9-xtA" secondAttribute="bottom" constant="20" id="BQx-bV-Xt2"/>
+                            <constraint firstAttribute="trailing" secondItem="UsT-PO-aYq" secondAttribute="trailing" constant="16" id="FCN-I4-dlM"/>
+                            <constraint firstItem="rIq-g9-xtA" firstAttribute="leading" secondItem="UsT-PO-aYq" secondAttribute="leading" id="HwP-KK-CDk"/>
+                            <constraint firstItem="UsT-PO-aYq" firstAttribute="leading" secondItem="zYa-eB-dYX" secondAttribute="leading" constant="16" id="Tlm-2d-RxP"/>
+                            <constraint firstItem="rIq-g9-xtA" firstAttribute="centerX" secondItem="87A-9g-Zmt" secondAttribute="centerX" id="X9n-cE-hUR"/>
+                            <constraint firstItem="PMC-QH-Kov" firstAttribute="centerX" secondItem="87A-9g-Zmt" secondAttribute="centerX" id="XFf-8d-RGi"/>
+                            <constraint firstItem="UsT-PO-aYq" firstAttribute="top" secondItem="9Xz-Av-f2m" secondAttribute="bottom" constant="8" id="cYr-aL-t2k"/>
+                            <constraint firstItem="PMC-QH-Kov" firstAttribute="centerY" secondItem="87A-9g-Zmt" secondAttribute="centerY" id="qr2-er-WnL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Book" id="Aag-db-2HD">
@@ -282,6 +303,10 @@
                         <outlet property="authorNameTextField" destination="Pnh-o6-w5O" id="c48-Ha-54D"/>
                         <outlet property="bookTitleTextField" destination="oKd-Tz-ym8" id="gA9-6J-WCL"/>
                         <outlet property="coverImageView" destination="PMC-QH-Kov" id="9MQ-CC-j2m"/>
+                        <outlet property="descriptionTextView" destination="7ki-tl-VM0" id="8Zm-DA-4vv"/>
+                        <outlet property="descriptionTextViewHeightConstraint" destination="Omi-re-6oe" id="tab-Sp-H66"/>
+                        <outlet property="isReadSwitch" destination="sBX-ao-z0h" id="EDf-t8-i4D"/>
+                        <outlet property="pageCountTextField" destination="36p-sV-FW6" id="u6q-Mm-84h"/>
                         <outlet property="saveBarButton" destination="fXG-Mu-VCe" id="Nme-Rw-Yjf"/>
                     </connections>
                 </viewController>
