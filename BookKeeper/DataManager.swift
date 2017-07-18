@@ -16,6 +16,7 @@ class DataManager: NSObject {
     
     private let ownerEntityName = "Owner"
     private let bookEntityName = "Book"
+    private let bookInfoEntityName = "BookInfo"
     
     static let sharedInstance = DataManager()
     private override init() {}
@@ -32,6 +33,13 @@ class DataManager: NSObject {
     private var bookEntity: NSEntityDescription {
         guard let book = NSEntityDescription.entity(forEntityName: bookEntityName, in: context) else { fatalError() }
         return book
+    }
+    
+    private var bookInfo: NSEntityDescription {
+        guard let info = NSEntityDescription.entity(forEntityName: bookInfoEntityName, in: context) else {
+            fatalError()
+        }
+        return info
     }
     
     /**
@@ -52,16 +60,21 @@ class DataManager: NSObject {
      - parameter image: book cover image
      */
     func addBook(owner: Owner, title: String, author: String,
-                 image: UIImage, pageCount: String, description: String, isRead: NSNumber) {
+                 image: UIImage, pageCount: String, description: String, isRead: Bool) {
         guard let imageData = UIImagePNGRepresentation(image) else { fatalError() }
         let book = Book(entity: bookEntity, insertInto: context)
         book.title = title
         book.author = author
         book.image = imageData as NSData
         book.bookOwner = owner
-        book.isBookRead = isRead
-        book.pageCount = pageCount
-        book.bookDescription = description
+        
+        let info = BookInfo(entity: bookInfo, insertInto: context)
+        info.isBookRead = isRead
+        info.pageCount = pageCount
+        info.bookDescription = description
+        
+        book.bookInfo = info
+        
         persistenceController.save()
     }
     
